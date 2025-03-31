@@ -96,5 +96,5 @@ This project is licensed under the ISC License - see the LICENSE file for detail
 
 ## Contact
 
-- Developer: [Your Name](mailto:your-email@example.com)
+- Developer: [Pranav Chikte](chiktepranav1378@gmail.com)
 - GitHub: [Your GitHub Profile](https://github.com/your-username) 
