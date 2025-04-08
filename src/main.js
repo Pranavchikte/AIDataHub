@@ -25,33 +25,48 @@ document.addEventListener("DOMContentLoaded", function () {
   const menuBtn = document.getElementById("menuBtn");
   const mobileMenu = document.getElementById("mobileMenu");
 
+  console.log("Menu elements:", { menuBtn, mobileMenu });
+
   if (menuBtn && mobileMenu) {
-    menuBtn.addEventListener("click", function () {
+    // Toggle menu on button click
+    menuBtn.addEventListener("click", function (e) {
+      console.log("Menu button clicked");
+      e.preventDefault();
+      e.stopPropagation();
       mobileMenu.classList.toggle("hidden");
-      console.log("Menu button clicked"); // For debugging
     });
 
     // Close menu when clicking outside
-    document.addEventListener("click", function (event) {
-      if (
-        !menuBtn.contains(event.target) &&
-        !mobileMenu.contains(event.target)
-      ) {
+    document.addEventListener("click", function (e) {
+      if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+        console.log("Clicked outside menu");
         mobileMenu.classList.add("hidden");
       }
     });
-  }
 
-  // Close mobile menu on window resize
-  let resizeTimeout;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      if (window.innerWidth >= 1024 && mobileMenu) {
+    // Close menu when clicking on links
+    const menuLinks = mobileMenu.querySelectorAll("a");
+    menuLinks.forEach((link) => {
+      link.addEventListener("click", function () {
+        console.log("Menu link clicked");
         mobileMenu.classList.add("hidden");
-      }
-    }, 250);
-  });
+      });
+    });
+
+    // Close menu on window resize
+    let resizeTimer;
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        if (window.innerWidth >= 1024) {
+          console.log("Window resized to desktop width");
+          mobileMenu.classList.add("hidden");
+        }
+      }, 250);
+    });
+  } else {
+    console.error("Menu elements not found:", { menuBtn, mobileMenu });
+  }
 
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
