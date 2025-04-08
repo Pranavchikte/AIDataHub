@@ -21,17 +21,28 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Optimize mobile menu
+  // Mobile menu functionality
   const menuBtn = document.getElementById("menuBtn");
   const mobileMenu = document.getElementById("mobileMenu");
 
   if (menuBtn && mobileMenu) {
-    menuBtn.addEventListener("click", () => {
+    menuBtn.addEventListener("click", function () {
       mobileMenu.classList.toggle("hidden");
+      console.log("Menu button clicked"); // For debugging
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener("click", function (event) {
+      if (
+        !menuBtn.contains(event.target) &&
+        !mobileMenu.contains(event.target)
+      ) {
+        mobileMenu.classList.add("hidden");
+      }
     });
   }
 
-  // Debounced window resize handler
+  // Close mobile menu on window resize
   let resizeTimeout;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimeout);
